@@ -27,7 +27,7 @@ public interface Translator {
 		return Translator.toSixDigit(Integer.toBinaryString(opcode));	
 	}
 	
-	// return operand r in a 2-digits String form
+	// return operand r, IX or cc in a 2-digits binary String form
 	static String rIxToBinary(String r) {
 		
 		String binaryR = Integer.toBinaryString(Integer.parseInt(r));
@@ -38,7 +38,7 @@ public interface Translator {
 		return binaryR;
 	}
 	
-	//return operand address in a 5-digits String form
+	//return operand address(or devid) in a 5-digits String form
 	static String addressToBinary(String address) {
 		String binaryAdd = Integer.toBinaryString(Integer.parseInt(address));
 		int length = binaryAdd.length();
@@ -66,5 +66,15 @@ public interface Translator {
         }
 
         return octalStr;
+	}
+	
+	//return operand count in a 4-digits String form
+	static String countToBinary(String count) {
+		String binaryCount = Integer.toBinaryString(Integer.parseInt(count));
+		int length = binaryCount.length();
+		for (int i = 0; i < 4 - length; i++) {
+			binaryCount = "0" + binaryCount;
+		}
+		return binaryCount;
 	}
 }
