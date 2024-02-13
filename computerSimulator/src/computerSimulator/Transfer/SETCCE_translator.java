@@ -8,17 +8,15 @@ import computerSimulator.Translator;
 public class SETCCE_translator implements Translator{
 
 	@Override
-	public int translate(PrintWriter printer, int loc, List<String> operands) {
+	public int translate(PrintWriter printer, int loc, List<String> operands, String opcode) {
 		String binaryStr = "";
 		if(operands.size() != 1) {
 			throw new IllegalArgumentException("ERROR!!!!! SETCCE wrong operands.size():  " + operands.size());
 		}else {
-			String Opcode = Translator.opcodeToBinary(44);
+			String Opcode = Translator.opcodeToBinary(opcode);
+			
 			String R = Translator.rIxToBinary(operands.get(0));
-			String IX = Translator.rIxToBinary("0");
-			String I = "0";
-			String Address = Translator.addressToBinary("0");
-			binaryStr = Opcode + R + IX + I + Address;
+			binaryStr = Opcode + R + "00000000";
 //			System.out.println("Opcode: " + Opcode + " R: " + R + " IX: " + IX + " I: " + I + " Add: " + Address);
 			printer.print(Translator.sixDigitLoc(loc) + " ");
 			printer.print(Translator.binaryToOctal(binaryStr));

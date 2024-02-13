@@ -8,7 +8,7 @@ import computerSimulator.Translator;
 public class Data_translator implements Translator{
 
 	@Override
-	public int translate(PrintWriter printer, int loc, List<String> operands){	
+	public int translate(PrintWriter printer, int loc, List<String> operands, String opcode){	
 		
 		//print nothing, just update the loc
 		if(operands.size() == 1) {
@@ -20,7 +20,6 @@ public class Data_translator implements Translator{
 
 				
 				printer.print(Translator.toSixDigit(Integer.toOctalString(Integer.parseInt(operands.get(0)))) );
-				System.out.println("Data turned Octal: " + operands.get(0));
 			}
 
 		}else {

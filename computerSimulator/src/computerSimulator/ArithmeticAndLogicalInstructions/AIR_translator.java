@@ -1,24 +1,23 @@
-package computerSimulator.IO_Operations;
+package computerSimulator.ArithmeticAndLogicalInstructions;
 
 import java.io.PrintWriter;
 import java.util.List;
 
 import computerSimulator.Translator;
 
-public class OUT_translator implements Translator{
+public class AIR_translator implements Translator{
 
 	@Override
 	public int translate(PrintWriter printer, int loc, List<String> operands, String opcode) {
 		String binaryStr = "";
 		if(operands.size() != 2) {
-			throw new IllegalArgumentException("ERROR!!!!! OUT wrong operands.size():  " + operands.size());
+			throw new IllegalArgumentException("ERROR!!!!! AIR wrong operands.size():  " + operands.size());
 		}else {
 			String Opcode = Translator.opcodeToBinary(opcode);
 			String R = Translator.rIxToBinary(operands.get(0));
-			String devid = Translator.addressToBinary( operands.get(1) );
-			
-			binaryStr = Opcode + R + "000" + devid;
-//			System.out.println("Opcode: " + Opcode + " R: " + R + " IX: " + IX + " I: " + I + " Add: " + Address);
+
+			String immed = Translator.addressToBinary(operands.get(1));
+			binaryStr = Opcode + R + "000" + immed;
 			printer.print(Translator.sixDigitLoc(loc) + " ");
 			printer.print(Translator.binaryToOctal(binaryStr));
 		}

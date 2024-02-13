@@ -8,12 +8,12 @@ import computerSimulator.Translator;
 public class MLT_translator implements Translator{
 
 	@Override
-	public int translate(PrintWriter printer, int loc, List<String> operands) {
+	public int translate(PrintWriter printer, int loc, List<String> operands, String opcode) {
 		String binaryStr = "";
 		if(operands.size() != 1 && operands.size() != 2) {
 			throw new IllegalArgumentException("ERROR!!!!! MLT wrong operands.size():  " + operands.size());
 		}else {
-			String Opcode = Translator.opcodeToBinary(22);
+			String Opcode = Translator.opcodeToBinary(opcode);
 			//TODO: check rx and ry can only be 0 or 2
 			String rx = Translator.rIxToBinary(operands.get(0));
 			String ry = Translator.rIxToBinary(operands.get(1));

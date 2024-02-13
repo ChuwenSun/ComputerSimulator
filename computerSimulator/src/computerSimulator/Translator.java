@@ -3,8 +3,16 @@ package computerSimulator;
 import java.io.PrintWriter;
 import java.util.List;
 
+/* Translator interface, 
+ * includes the translate method that do not have a body, 
+ * and also a bunch of helper method in the translation process 
+ */  
+
 public interface Translator {
-	int translate(PrintWriter printer, int loc, List<String> operands);
+	int translate(PrintWriter printer, int loc, List<String> operands, String opcode);
+	
+	
+	/* Helper Methods */
 	
 	// fill up a string with 0 in the front till it has 6 digit
 	static String toSixDigit(String str) {
@@ -22,14 +30,13 @@ public interface Translator {
 	}
 	
 	// return opcode in a 6-digits String form
-	static String opcodeToBinary(int opcode) {
-		//turn the opcodes into a binary string and then turn it fill it up to 6 digit 
-		return Translator.toSixDigit(Integer.toBinaryString(opcode));	
+	static String opcodeToBinary(String opcode) {
+		int decimalVal = Integer.parseInt(opcode, 8);
+		return Translator.toSixDigit(Integer.toBinaryString(decimalVal));
 	}
 	
-	// return operand r, IX or cc in a 2-digits binary String form
+	// return a 2-digits binary String form of a decimal String(used for R, IX, CC and etc.)
 	static String rIxToBinary(String r) {
-		
 		String binaryR = Integer.toBinaryString(Integer.parseInt(r));
 		if(binaryR.length() == 1) {
 			// "1" and "0" need a 0 in the front to be two-digits: "01", "00"
@@ -38,7 +45,7 @@ public interface Translator {
 		return binaryR;
 	}
 	
-	//return operand address(or devid) in a 5-digits String form
+	//return a 5-digits binary String form of a decimal String(used for address, devid and etc.)
 	static String addressToBinary(String address) {
 		String binaryAdd = Integer.toBinaryString(Integer.parseInt(address));
 		int length = binaryAdd.length();
@@ -68,7 +75,7 @@ public interface Translator {
         return octalStr;
 	}
 	
-	//return operand count in a 4-digits String form
+	//return a 4-digits binary String form of a decimal String(used for count)
 	static String countToBinary(String count) {
 		String binaryCount = Integer.toBinaryString(Integer.parseInt(count));
 		int length = binaryCount.length();

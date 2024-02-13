@@ -1,23 +1,23 @@
-package computerSimulator.IO_Operations;
+package computerSimulator.Transfer;
 
 import java.io.PrintWriter;
 import java.util.List;
 
 import computerSimulator.Translator;
 
-public class OUT_translator implements Translator{
+public class RFS_translator implements Translator{
 
 	@Override
 	public int translate(PrintWriter printer, int loc, List<String> operands, String opcode) {
 		String binaryStr = "";
-		if(operands.size() != 2) {
-			throw new IllegalArgumentException("ERROR!!!!! OUT wrong operands.size():  " + operands.size());
+		if(operands.size() != 1) {
+			throw new IllegalArgumentException("ERROR!!!!! RFS wrong operands.size():  " + operands.size());
 		}else {
 			String Opcode = Translator.opcodeToBinary(opcode);
-			String R = Translator.rIxToBinary(operands.get(0));
-			String devid = Translator.addressToBinary( operands.get(1) );
 			
-			binaryStr = Opcode + R + "000" + devid;
+			String Immed = Translator.addressToBinary(operands.get(0));
+			binaryStr = Opcode + "00000" + Immed;
+//			System.out.println("aslkfnlaskfnlkansfklnaslfk" + binaryStr);
 //			System.out.println("Opcode: " + Opcode + " R: " + R + " IX: " + IX + " I: " + I + " Add: " + Address);
 			printer.print(Translator.sixDigitLoc(loc) + " ");
 			printer.print(Translator.binaryToOctal(binaryStr));

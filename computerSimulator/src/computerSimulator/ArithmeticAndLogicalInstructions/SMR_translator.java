@@ -8,12 +8,12 @@ import computerSimulator.Translator;
 public class SMR_translator implements Translator{
 
 	@Override
-	public int translate(PrintWriter printer, int loc, List<String> operands) {
+	public int translate(PrintWriter printer, int loc, List<String> operands, String opcode) {
 		String binaryStr = "";
 		if(operands.size() != 3 && operands.size() != 4) {
 			throw new IllegalArgumentException("ERROR!!!!! SMR wrong operands.size():  " + operands.size());
 		}else {
-			String Opcode = Translator.opcodeToBinary(17);
+			String Opcode = Translator.opcodeToBinary(opcode);
 			String R = Translator.rIxToBinary(operands.get(0));
 			String IX = Translator.rIxToBinary(operands.get(1));
 			String I = "0";

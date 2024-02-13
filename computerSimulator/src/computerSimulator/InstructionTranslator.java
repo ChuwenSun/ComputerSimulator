@@ -15,15 +15,24 @@ import computerSimulator.IO_Operations.*;
 public class InstructionTranslator {
 	// Initialize the opcode hashmap
 	private static final Map<String, String> opcodes = new HashMap<>();
+	// Initialize the translatorMap hashmap
 	private static final Map<String, Translator> translatorMap = new HashMap<>();
-	static {  
+
+	/*
+	 * Adding translators into translatorMap 
+	 * Adding opcodes String into opcodes
+	 */
+	static { 
 		//Data and Loc
         translatorMap.put("LOC", new LOC_translator());
+        opcodes.put("LOC", "000");
         translatorMap.put("Data", new Data_translator());
-		
+        opcodes.put("Data", "000");
 		//Miscellaneous Instructions
         opcodes.put("HLT", "000"); 
-        translatorMap.put("HLT", new HLT_translator());
+        translatorMap.put("End:", new HLT_translator());
+        opcodes.put("TRAP", "045"); 
+        translatorMap.put("TRAP", new TRAP_translator());
         //Load/Store Instructions
         opcodes.put("LDR", "01");
         translatorMap.put("LDR", new LDR_translator());
@@ -50,7 +59,7 @@ public class InstructionTranslator {
         opcodes.put("JSR", "12");
         translatorMap.put("JSR", new JSR_translator());
         opcodes.put("RFS", "13");
-//        translatorMap.put("RFS", new RFS_translator());
+        translatorMap.put("RFS", new RFS_translator());
         opcodes.put("SOB", "14");
         translatorMap.put("SOB", new SOB_translator());
         opcodes.put("JGE", "15");
@@ -62,9 +71,9 @@ public class InstructionTranslator {
         opcodes.put("SMR", "17");
         translatorMap.put("SMR", new SMR_translator());
         opcodes.put("AIR", "20");
-//        translatorMap.put("AIR", new AIR_translator());
+        translatorMap.put("AIR", new AIR_translator());
         opcodes.put("SIR", "21");
-//        translatorMap.put("SIR", new SIR_translator());
+        translatorMap.put("SIR", new SIR_translator());
         
         opcodes.put("MLT", "22");
         translatorMap.put("MLT", new MLT_translator());
@@ -109,25 +118,22 @@ public class InstructionTranslator {
     }
 	
 
-    // TODO: Add other translation methods here
-
-    // General method to translate a instruction, parameters are the instructionString and the operands
-    public static int translateInstruction(PrintWriter printer, int loc, String instructionString, List<String> operands) {
-        // Specific translation method will be called to translate  instruction
-    	Translator translator = translatorMap.get(instructionString);
-    	if (translator == null) {
-    		//TODO: ERROR!!
-    		System.out.println("ERROR translator NULL");
-    	}
-    	return translator.translate(printer, loc, operands);
-    	
-//    	switch (instructionString) {
-//            case "HLT":
-//                return translate(operands);
-//            case "STR":
-//                return translateSTR(operands);
-//            default:
-//                return "Unknown instruction!!!";
-        
+	/*
+	 * General method to translate one instruction, parameters are the output
+	 * printer, current memory loc, instructionString and the operands
+	 */    
+		public static int translateInstruction(PrintWriter printer, int loc, String instructionString, List<String> operands) {
+			Translator translator = translatorMap.get(instructionString);
+			String opcode = opcodes.get(instructionString);
+			if (translator == null) {
+				throw new NullPointerException("translator is NULL: " + instructionString);
+			}
+			
+			/*
+			 * After identifying which instruction it is, the corresponding translator is
+			 * selected as translator, and corresponding translate method will be called
+			 * here
+			 */    	
+			return translator.translate(printer, loc, operands, opcode);        
     }
 }

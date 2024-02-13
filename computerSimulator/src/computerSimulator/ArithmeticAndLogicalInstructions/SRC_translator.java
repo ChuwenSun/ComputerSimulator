@@ -8,12 +8,12 @@ import computerSimulator.Translator;
 public class SRC_translator implements Translator{
 
 	@Override
-	public int translate(PrintWriter printer, int loc, List<String> operands) {
+	public int translate(PrintWriter printer, int loc, List<String> operands, String opcode) {
 		String binaryStr = "";
 		if(operands.size() != 4) {
 			throw new IllegalArgumentException("ERROR!!!!! RRC wrong operands.size():  " + operands.size());
 		}else {
-			String Opcode = Translator.opcodeToBinary(31);
+			String Opcode = Translator.opcodeToBinary(opcode);
 			String R = Translator.rIxToBinary(operands.get(0));
 			String Count = Translator.countToBinary( operands.get(1) );
 			

@@ -8,12 +8,12 @@ import computerSimulator.Translator;
 public class NOT_translator implements Translator{
 
 	@Override
-	public int translate(PrintWriter printer, int loc, List<String> operands) {
+	public int translate(PrintWriter printer, int loc, List<String> operands, String opcode) {
 		String binaryStr = "";
 		if(operands.size() != 1) {
 			throw new IllegalArgumentException("ERROR!!!!! NOT wrong operands.size():  " + operands.size());
 		}else {
-			String Opcode = Translator.opcodeToBinary(27);
+			String Opcode = Translator.opcodeToBinary(opcode);
 			//TODO: check rx can only be 0 or 2
 			String rx = Translator.rIxToBinary(operands.get(0));
 			String ry = Translator.rIxToBinary("0");

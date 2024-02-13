@@ -8,12 +8,12 @@ import computerSimulator.Translator;
 public class IN_translator implements Translator{
 
 	@Override
-	public int translate(PrintWriter printer, int loc, List<String> operands) {
+	public int translate(PrintWriter printer, int loc, List<String> operands, String opcode) {
 		String binaryStr = "";
 		if(operands.size() != 2) {
 			throw new IllegalArgumentException("ERROR!!!!! IN wrong operands.size():  " + operands.size());
 		}else {
-			String Opcode = Translator.opcodeToBinary(32);
+			String Opcode = Translator.opcodeToBinary(opcode);
 			String R = Translator.rIxToBinary(operands.get(0));
 			String devid = Translator.addressToBinary( operands.get(1) );
 			
